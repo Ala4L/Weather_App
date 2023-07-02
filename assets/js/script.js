@@ -1,9 +1,11 @@
+//api key info
 const apiKey = "e7ca8185618532a2e81ecd059e79faa2";
 const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
 const searchBox = document.querySelector("#text");
 const searchBtn = document.querySelector("#search");
-const weatherIcon = document.querySelector(".weather-icon")
+const weatherIcon = document.querySelector(".weather-icon");
+const mapIcon = document.querySelector("#pin");
 
 // pulls weather info from api
 async function checkWeather(city) {
@@ -39,23 +41,31 @@ async function checkWeather(city) {
 }
 
 
+// input by onclick button
+searchBtn.addEventListener("click", () => {checkWeather(searchBox.value)})
 
+//input onkeypress 
+searchBox.addEventListener("keyup", setInput);
+function setInput(evt) {
+    if (evt.keyCode == 13) {
+        checkWeather(searchBox.value);
+    }
+}
 
-
-
-searchBtn.addEventListener("click", () => {checkWeather(searchBox.value)
-})
 
 checkWeather()
 
 // shows current date
 window.onload = () => {
     const date = new Date();
+    let months = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
     let currentDay = String(date.getDate()).padStart(2, '0');
-    let currentMonth = String(date.getMonth()+1).padStart(2, "0");
+    let currentMonth = months[date.getMonth()];
     let currentYear = date.getFullYear();
   
-    document.querySelector("#date").innerHTML = `${currentDay}-${currentMonth}-${currentYear}`;
+    document.querySelector("#date").innerHTML = `${currentMonth} ${currentDay}, ${currentYear}`;
 };
 
 

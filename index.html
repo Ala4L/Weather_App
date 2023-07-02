@@ -14,7 +14,7 @@
     <section class="input-part container-sm overflow-auto">
         <div class="form row gx-5">
             <div class="col-sm-6 pt-5" id="left-side">
-                <input type="text" id="text" placeholder="Enter City Name" autocomplete="on" required/>
+                <input type="text" id="text" placeholder="Enter City Name" autocomplete="off" spellcheck="true" required/>
                 <button id="search">Search</button>
                 <br>
                 <hr><h5>OR</h5><hr>
@@ -22,7 +22,9 @@
             </div>
             <div class="col-sm-6" id="right-side">
                 <p class="name" id="date">06-28-2023</p>
-                <h2 id="city"><img class="pin" src="https://www.freeiconspng.com/uploads/orange-location-icon-png-18.png" >Williamsburg, US</h2>
+                <img class="pin" src="./assets/img/location.png" width="34px" height="36px">
+                <h2 id="city">Williamsburg, US</h2>
+                <br><br>
                 <img src="./assets/img/weather_icons/clouds.png" class="weather-icon" width="55px" height="55px">
                 <h1 id="main-temp">73&degF</h1>
                 <div class="details">
