@@ -1,7 +1,7 @@
 body {
     background-image: url("../img/linear-gradient-orange-blue-1920x1080-c2-ff8c00-add8e6-a-255-f-14.svg");
-    background-size: 100%;
-    background-repeat: no-repeat; 
+    background-size: cover;
+    background-repeat:no-repeat;
 }
 
 
@@ -101,5 +101,10 @@ p, h1, h2, h5 {
 }
 
 
+.pin{
+    width: 34px;
+    height: 36px;
+    
+}
 
 
