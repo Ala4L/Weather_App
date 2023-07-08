@@ -76,36 +76,44 @@ const locationBtn = document.querySelector("#location");
 const infoTxt = document.querySelector(".info-txt");
 
 locationBtn.addEventListener("click", () => {
-    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
-    }else {
-            alert("Your browser do not support geolocation api");
-        }
+    navigator.geolocation.getCurrentPosition(
+        applyWeatherFromLocation,
+        console.log('get user location')
+      );
+      function applyWeatherFromLocation(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        fetch(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&&units=metric&APPID=${apiKey}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+        document.querySelector("#city").innerHTML = data.name+ ", " + data.sys.country;
+        document.querySelector("#main-temp").innerHTML = Math.round(data.main.temp) + "&degC";
+        document.querySelector("#humidity").innerHTML = data.main.humidity + " %";
+        document.querySelector("#wind").innerHTML = data.wind.speed + " km/h";
+        document.querySelector("#feel-like").innerHTML = Math.round(data.main.feels_like) + "&degC";
+
+    if(data.weather[0].main == "Clouds"){
+        weatherIcon.src = "./assets/img/weather_icons/clouds.png";
+    }
+    else if(data.weather[0].main == "Clear"){
+        weatherIcon.src = "./assets/img/weather_icons/clear.png";
+    }
+    else if(data.weather[0].main == "Rain"){
+        weatherIcon.src = "./assets/img/weather_icons/rain.png";
+    }
+    else if(data.weather[0].main == "Drizzle"){
+        weatherIcon.src = "./assets/img/weather_icons/drizzle.png";
+    }
+    else if(data.weather[0].main == "Mist"){
+        weatherIcon.src = "./assets/img/weather_icons/mist.png";
+    }
+    else if(data.weather[0].main == "Snow"){
+        weatherIcon.src = "./assets/img/weather_icons/snow.png";
+    }
+          }
+)}
+      checkWeather()
+
     });
-
-    function onSuccess(position){
-        const {latitude, longitude} = position.coords;
-        let api = `http://api.openweathermap.org/geo/1.0/reverse?
-        lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
-        
-        
-
-        fetch(api)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-           document.querySelector("#city").innerHTML = data.name + `${latitude}` + `${longitude}`
-            
-            
-        })
-       
-    }
-
-    function onError(error){
-    infoTxt.innerText = error.message;
-    infoTxt.classList.add("error");
-    }
-
-checkWeather()
-
-
