@@ -70,44 +70,42 @@ window.onload = () => {
 
 
 
-/*const city = document.getElementById("city-name");
-const temp = document.getElementById("main-temp");
-const wind = document.getElementById("wind");
-const humidity = document.getElementById("humidity");
-const feel = document.getElementById("feel-like");
-const input = document.getElementById("text");
 
-window.onload = () => {
-    let date = new Date();
-    document.getElementById("date").innerHtml = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+//get  Weather by user location
+const locationBtn = document.querySelector("#location");
+const infoTxt = document.querySelector(".info-txt");
 
-};
-function enter(event) {
-    if (event.code == "Enter") {
-        getdata();
-    } else {
-        return false;
-    }
-}
-function getdata() {
-    if (input.value != "") {
-        fetch(
-            `https://api.openweathermap.org/data/2.5/weather?
-            q=${input.value}&appid=${apiKey}&units=metric`
-        )
-        .then((response) => response.json())
-        .then((data) => {
-            city.InnerText = data.name;
-            temp.InnerText = `${parseInt(data.main.temp)}&deg`;
-            wind.innerText = `${data.wind.speed}km/h`;
-            humidity.InnerText = `${data.main.humidity}%`;
-            feel.innerText = `${parseInt(data.main.feels_like)}&deg`;
+locationBtn.addEventListener("click", () => {
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    }else {
+            alert("Your browser do not support geolocation api");
+        }
+    });
+
+    function onSuccess(position){
+        const {latitude, longitude} = position.coords;
+        let api = `http://api.openweathermap.org/geo/1.0/reverse?
+        lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+        
+        
+
+        fetch(api)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+           document.querySelector("#city").innerHTML = data.name + `${latitude}` + `${longitude}`
+            
+            
         })
-        .catch(() => {
-            alert("please enter a valid city name");
-        });
-    } else {
-        return false;
+       
     }
-    input.value = "";
-}*/
+
+    function onError(error){
+    infoTxt.innerText = error.message;
+    infoTxt.classList.add("error");
+    }
+
+checkWeather()
+
+
