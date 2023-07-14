@@ -1,6 +1,6 @@
 //api key info
 const apiKey = "e7ca8185618532a2e81ecd059e79faa2";
-const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=imperial&q=";
 
 const searchBox = document.querySelector("#text");
 const searchBtn = document.querySelector("#search");
@@ -12,12 +12,12 @@ async function checkWeather(city) {
     const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
     let data = await response.json();
     
-
+    
     document.querySelector("#city").innerHTML = data.name + ", " + data.sys.country;
-    document.querySelector("#main-temp").innerHTML = Math.round(data.main.temp) + "&degC";
+    document.querySelector("#main-temp").innerHTML = Math.round(data.main.temp) + "&degF";
     document.querySelector("#humidity").innerHTML = data.main.humidity + " %";
-    document.querySelector("#wind").innerHTML = data.wind.speed + " km/h";
-    document.querySelector("#feel-like").innerHTML = Math.round(data.main.feels_like) + "&degC";
+    document.querySelector("#wind").innerHTML = Math.round(data.wind.speed) + " mph";
+    document.querySelector("#feel-like").innerHTML = Math.round(data.main.feels_like) + "&degF";
 
     if(data.weather[0].main == "Clouds"){
         weatherIcon.src = "./assets/img/weather_icons/clouds.png";
@@ -37,7 +37,8 @@ async function checkWeather(city) {
     else if(data.weather[0].main == "Snow"){
         weatherIcon.src = "./assets/img/weather_icons/snow.png";
     }
-    
+
+    searchBox.value = "";
 }
 
 
@@ -84,15 +85,15 @@ locationBtn.addEventListener("click", () => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
         fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&&units=metric&APPID=${apiKey}`
+          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&&units=imperial&APPID=${apiKey}`
         )
           .then((response) => response.json())
           .then((data) => {
         document.querySelector("#city").innerHTML = data.name+ ", " + data.sys.country;
-        document.querySelector("#main-temp").innerHTML = Math.round(data.main.temp) + "&degC";
+        document.querySelector("#main-temp").innerHTML = Math.round(data.main.temp) + "&degF";
         document.querySelector("#humidity").innerHTML = data.main.humidity + " %";
-        document.querySelector("#wind").innerHTML = data.wind.speed + " km/h";
-        document.querySelector("#feel-like").innerHTML = Math.round(data.main.feels_like) + "&degC";
+        document.querySelector("#wind").innerHTML = Math.round(data.wind.speed) + " mph";
+        document.querySelector("#feel-like").innerHTML = Math.round(data.main.feels_like) + "&degF";
 
     if(data.weather[0].main == "Clouds"){
         weatherIcon.src = "./assets/img/weather_icons/clouds.png";
