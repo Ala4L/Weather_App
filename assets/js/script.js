@@ -39,6 +39,7 @@ async function checkWeather(city) {
     }
 
     searchBox.value = "";
+
 }
 
 
@@ -68,8 +69,6 @@ window.onload = () => {
   
     document.querySelector("#date").innerHTML = `${currentMonth} ${currentDay}, ${currentYear}`;
 };
-
-
 
 
 //get  Weather by user location
@@ -118,3 +117,28 @@ locationBtn.addEventListener("click", () => {
       checkWeather()
 
     });
+
+
+///Temp converter///
+
+const toggleC = document.getElementById('Cel');
+const toggleF = document.getElementById('Fah');
+toggleC.style.fontWeight = "300"
+toggleF.style.fontWeight = "700"
+
+
+toggleC.addEventListener('click', function () {
+    tempType = "C"
+    toggleC.style.fontWeight = "700"
+    toggleF.style.fontWeight = "300"
+    checkWeather(city);
+});
+
+toggleF.addEventListener('click', function(){
+    tempType = "F"
+    toggleC.style.fontWeight = "300"
+    toggleF.style.fontWeight = "700"
+    checkWeather(city);
+});
+
+
